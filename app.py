@@ -3,6 +3,15 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
+ENV = 'dev'
+
+if ENV == 'dev':
+    app.debug = True
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:postgres@localhost/testdb'
+else:
+    app.debug = False
+    app.config['SQLALCHEMY_DATABASE_URI'] = ''
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -20,4 +29,4 @@ def submit():
         return render_template('success.html')
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
